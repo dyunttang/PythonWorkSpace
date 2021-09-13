@@ -1,3 +1,4 @@
+from movie_model import MovieModel
 import requests
 
 
@@ -9,4 +10,15 @@ def callMovieApi(page=1):
 
     responseDict = response.json()  # 딕셔너리 타입으로 변환
     movies = responseDict["data"]["movies"]   # list type
-    return movies
+    return convert_model(movies)
+
+
+def convert_model(movies):
+    list = []
+
+    for movie in movies:
+        movie_model = MovieModel(
+            movie.titlem, movie.rating, movie.medium_cover_image)
+        list.append(movie_model)
+
+    return list
